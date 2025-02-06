@@ -10,6 +10,8 @@ command /스코어보드:
             send "켜켜켜"
             stop
 
+
+#깃허브테스트aa
 every 5 second:
     loop all players:
         if {%loop-player%::스코어보드} is not set:
