@@ -1,0 +1,129 @@
+command /스코어보드:
+    trigger:
+        if {%player%::스코어보드} is true:
+            set {%player%::스코어보드} to false
+            send "꺼꺼꺼"
+            stop
+
+        else if {%player%::스코어보드} is false:
+            set {%player%::스코어보드} to true
+            send "켜켜켜"
+            stop
+
+every 5 second:
+    loop all players:
+        if {%loop-player%::스코어보드} is not set:
+            set {%loop-player%::스코어보드} to true
+            stop
+
+        if {%loop-player%::스코어보드} is true:
+            wipe loop-player's sidebar
+            set name of sidebar of loop-player to "&b&l박철덕서버 | alt9 MC"
+            set score "WEBSITE &6alt9.co.kr" in sidebar of loop-player to 7
+            set score "================ " in sidebar of loop-player to 6
+            set score "통장 : %{돈::%loop-player's uuid%}% 원" in sidebar of loop-player to 5
+            set score "경제마일 : %loop-player's money% 마일" in sidebar of loop-player to 4
+
+            # 직업 표시 로직
+            if {직업::%loop-player's uuid%} is "농부":
+                set {_직업} to "농부"
+            else if {직업::%loop-player's uuid%} is "광부":
+                set {_직업} to "광부"
+            else:
+                set {_직업} to "무직"
+            
+            set score "직업 : %{_직업}%" in sidebar of loop-player to 3
+
+            if {RPG직업::%loop-player's uuid%} is "슈퍼소드":
+                set {_RPG직업} to "&b슈퍼소드&e(&7검사&e)"
+            else if {RPG직업::%loop-player's uuid%} is "최잘생":
+                set {_RPG직업} to "&b최잘생&e(&7수학마법사&e)"
+            else if {RPG직업::%loop-player's uuid%} is "박교장":
+                set {_RPG직업} to "&b박교장&e(&7스쿨 마법사&e)"
+            else if {RPG직업::%loop-player's uuid%} is "원창한의원":
+                set {_RPG직업} to "&b원창맨&e(&7힐러&e)"
+            else:
+                set {_RPG직업} to "무직"
+
+            set score "RPG : %{_RPG직업}%" in sidebar of loop-player to 2
+            set score "시간 : %now%" in sidebar of loop-player to 1
+
+
+            if {차원::%loop-player's uuid%} is "야생":
+                set {_지역} to "&a야생&8(&b1&8)"
+            else if {차원::%loop-player's uuid%} is "야생2":
+                set {_지역} to "&a야생&8(&c2&8)"
+            else if {차원::%loop-player's uuid%} is "야생3":
+                set {_지역} to "&a야생&8(&b3&8)"
+            else if {차원::%loop-player's uuid%} is "야생4":
+                set {_지역} to "&a야생&8(&b4&8)"
+            else if {차원::%loop-player's uuid%} is "야생5":
+                set {_지역} to "&a야생&8(&b5&8)"
+            else if {차원::%loop-player's uuid%} is "PVP":
+                set {_지역} to "&bP&3V&bP"
+            else if {차원::%loop-player's uuid%} is "스폰":
+                set {_지역} to "스폰"
+            else if {차원::%loop-player's uuid%} is "시티":
+                set {_지역} to "시티"
+            else if {차원::%loop-player's uuid%} is "플레이어시티":
+                set {_지역} to "플레이어 마을"
+            else if {차원::%loop-player's uuid%} is "MMORPG":
+                set {_지역} to "&eMMORPG"
+
+            set score "지역 : &7🔰%{_지역}%" in sidebar of loop-player to 0
+            set score "경험치 : " in sidebar of loop-player to -1
+            set score "접속자수 : %number of all players%" in sidebar of loop-player to -2
+            set score "================" in sidebar of loop-player to -3
+            set score "진행중인 퀘스트 (최대 2개 표시)" in sidebar of loop-player to -4
+            set score "----------------" in sidebar of loop-player to -5
+
+            if {퀘스트알밤부마을철공장::%loop-player's uuid%} is 1:
+                if {퀘스트표시::%loop-player's uuid%} is not set:
+                    set {퀘스트표시::%loop-player's uuid%} to "알밤부마을 철공장 [심층암조약돌 64개]"
+            
+
+#! 얘가 이 if부분을 인식을 못함 하지만 명령어로 1로 만드니 인식
+#! 애초에 퀘스트 스크립트가 따로논거임. 스코어보드랑 변수삭제랑 퀘스트랑 같이 체험학습갔는데 지혼자 다른곳에 있었음. 
+            if {퀘스트알밤부마을박물관::%loop-player's uuid%} is 1:
+                if {퀘스트표시::%loop-player's uuid%} is not set:
+                    set {퀘스트표시::%loop-player's uuid%} to "알밤부마을 박물관 [돼지고기 64개]"
+                
+
+            if {퀘스트표시::%loop-player's uuid%} is set:
+                if {퀘스트표시::%loop-player's uuid%} is not "알밤부마을 철공장 [심층암조약돌 64개]":
+                    if {퀘스트알밤부마을철공장::%loop-player's uuid%} is 1:
+                        set {퀘스트표시2::%loop-player's uuid%} to "알밤부마을 철공장 [심층암조약돌 64개]"
+                else if {퀘스트표시::%loop-player's uuid%} is not "알밤부마을 박물관 [돼지고기 64개]":
+                    if {퀘스트알밤부마을박물관::%loop-player's uuid%} is 1:
+                        set {퀘스트표시2::%loop-player's uuid%} to "알밤부마을 박물관 [돼지고기 64개]"
+
+      
+
+            if {퀘스트표시2::%loop-player's uuid%} is set:
+                if {퀘스트표시2::%loop-player's uuid%} is not "알밤부마을 철공장 [심층암조약돌 64개]":
+                    if {퀘스트표시::%loop-player's uuid%} is not "알밤부마을 철공장 [심층암조약돌 64개]":
+                        if {퀘스트알밤부마을철공장::%loop-player's uuid%} is 1:
+                            set {퀘스트표시3::%loop-player's uuid%} to "2개 이상"
+                else if {퀘스트표시2::%loop-player's uuid%} is not "알밤부마을 박물관 [돼지고기 64개]":
+                    if {퀘스트표시::%loop-player's uuid%} is not "알밤부마을 박물관 [돼지고기 64개]":
+                        if {퀘스트알밤부마을박물관::%loop-player's uuid%} is 1:
+                            set {퀘스트표시3::%loop-player's uuid%} to "2개 이상"
+
+
+
+
+                
+            set score "%{퀘스트표시::%loop-player's uuid%}%" in sidebar of loop-player to -6
+            set score "%{퀘스트표시2::%loop-player's uuid%}%" in sidebar of loop-player to -7
+            set score "%{퀘스트표시3::%loop-player's uuid%}%" in sidebar of loop-player to -8
+
+
+            delete {퀘스트표시::%loop-player's uuid%}
+            delete {퀘스트표시2::%loop-player's uuid%}
+            delete {퀘스트표시3::%loop-player's uuid%}
+
+#! 똑같은 거는 무시되니까. 하나 진행중일땐 퀘퀘가 설정됐으니 퀘퀘2가 일하고 2개 진행중이면 두개가 다르니까 2개가 나오는거임 
+
+
+        if {%loop-player%::스코어보드} is false:
+            wipe loop-player's sidebar
