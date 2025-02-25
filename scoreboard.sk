@@ -1,22 +1,22 @@
 command /스코어보드:
     trigger:
-        if {%player%::스코어보드} is true:
-            set {%player%::스코어보드} to false
+        if {스코어보드::%player%} is true:
+            set {스코어보드::%player%} to false
             send "꺼꺼꺼"
             stop
 
-        else if {%player%::스코어보드} is false:
-            set {%player%::스코어보드} to true
+        else if {스코어보드::%player%} is false:
+            set {스코어보드::%player%} to true
             send "켜켜켜"
             stop
 
 every 5 second:
     loop all players:
-        if {%loop-player%::스코어보드} is not set:
-            set {%loop-player%::스코어보드} to true
+        if {스코어보드::%loop-player%} is not set:
+            set {스코어보드::%loop-player%} to true
             stop
 
-        if {%loop-player%::스코어보드} is true:
+        if {스코어보드::%loop-player%} is true:
             wipe loop-player's sidebar
             set name of sidebar of loop-player to "&b&l박철덕서버 | alt9 MC"
             set score "WEBSITE &6alt9.co.kr" in sidebar of loop-player to 7
@@ -34,18 +34,7 @@ every 5 second:
             
             set score "직업 : %{_직업}%" in sidebar of loop-player to 3
 
-            if {RPG직업::%loop-player's uuid%} is "슈퍼소드":
-                set {_RPG직업} to "&b슈퍼소드&e(&7검사&e)"
-            else if {RPG직업::%loop-player's uuid%} is "최잘생":
-                set {_RPG직업} to "&b최잘생&e(&7수학마법사&e)"
-            else if {RPG직업::%loop-player's uuid%} is "박교장":
-                set {_RPG직업} to "&b박교장&e(&7스쿨 마법사&e)"
-            else if {RPG직업::%loop-player's uuid%} is "원창한의원":
-                set {_RPG직업} to "&b원창맨&e(&7힐러&e)"
-            else:
-                set {_RPG직업} to "무직"
 
-            set score "RPG : %{_RPG직업}%" in sidebar of loop-player to 2
             set score "시간 : %now%" in sidebar of loop-player to 1
 
 
@@ -67,10 +56,9 @@ every 5 second:
                 set {_지역} to "시티"
             else if {차원::%loop-player's uuid%} is "플레이어시티":
                 set {_지역} to "플레이어 마을"
-            else if {차원::%loop-player's uuid%} is "MMORPG":
-                set {_지역} to "&eMMORPG"
 
-            set score "지역 : &7🔰%{_지역}%" in sidebar of loop-player to 0
+
+            set score "지역 : &7🔰%world of loop-player%" in sidebar of loop-player to 0
             set score "경험치 : " in sidebar of loop-player to -1
             set score "접속자수 : %number of all players%" in sidebar of loop-player to -2
             set score "================" in sidebar of loop-player to -3
@@ -125,5 +113,5 @@ every 5 second:
 #! 똑같은 거는 무시되니까. 하나 진행중일땐 퀘퀘가 설정됐으니 퀘퀘2가 일하고 2개 진행중이면 두개가 다르니까 2개가 나오는거임 
 
 
-        if {%loop-player%::스코어보드} is false:
+        if {스코어보드::%loop-player%} is false:
             wipe loop-player's sidebar
